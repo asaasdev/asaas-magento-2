@@ -6,7 +6,8 @@
 
 ### Versões Compativeis:
 
-- [x] 2.3.3
+- [x] 2.3.x
+- [x] 2.4.x
  
 ### Pré requisito:
 
@@ -16,7 +17,7 @@
 
 - Realize o download do módulo e siga os seguintes passos de acordo com a forma que sua loja foi instalada:
 
-#### [Asaas-Magento ](https://github.com/tezusecommerce/asaas-magento.git)
+#### [Asaas-Magento2 ](https://github.com/tezusecommerce/asaas-magento.git)
 
 ### Instalar usando o Composer
 
@@ -31,8 +32,8 @@
 
 - Caso sua loja tenha sido criada por meio do clone ou download do projeto magento, siga os seguintes passos:
 
-1. Extraia o conteúdo do download ZIP e mova o diretório ```\Magento\``` para dentro da pasta ```Asaas```
-2. Verifique se está dessa maneira seus diretórios na sua loja ```app/code/Asaas/Magento```
+1. Extraia o conteúdo do download ZIP e mova o para ```\Magento2\``` para dentro da pasta ```Asaas```
+2. Verifique se está dessa maneira seus diretórios na sua loja ```app/code/Asaas/Magento2```
 3. Execute o comando ```bin/magento setup:upgrade```
 4. Execute o comando ```bin/magento setup:di:compile```
 5. Execute o comando ```bin/magento setup:static-content:deploy -f```
