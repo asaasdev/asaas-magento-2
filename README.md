@@ -17,7 +17,7 @@
 
 - Realize o download do módulo e siga os seguintes passos de acordo com a forma que sua loja foi instalada:
 
-#### [Asaas-Magento2 ](https://github.com/tezusecommerce/asaas-magento.git)
+#### [Asaas-Magento2 ](https://github.com/tezusecommerce/asaas-magento-2.git)
 
 ### Instalar usando o Composer
 
