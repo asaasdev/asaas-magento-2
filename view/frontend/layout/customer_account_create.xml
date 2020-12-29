@@ -1,0 +1,13 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+      <head>
+          <script src="Asaas_Magento2::js/cpfcnpj.js"/>
+     </head>
+    <body>
+        <referenceBlock name="customer_form_register">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Asaas_Magento2::form/register.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

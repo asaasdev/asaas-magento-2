@@ -1,0 +1,27 @@
+<?php
+$order = $block->getOrder();
+$boleto = $block->getBoleto();
+$payment = $order->getPayment();
+$order->getShippingMethod();
+if ($payment->getMethod() === "cc" || $payment->getMethod() === "boleto") :
+?>
+  <div class="checkout-success">
+    <?php if ($order->getIncrementId()) : ?>
+      <?php if ($block->getCustomerId()) : ?>
+        <p>
+          <?php echo __('Your order number is: ' . $order->getIncrementId()); ?>
+        </p>
+        <p>
+          <?php if ($payment->getMethod() === "boleto") : ?>
+            <?php $helper = \Magento\Framework\App\ObjectManager::getInstance()->get('Asaas\Magento2\Helper\Data');
+            echo $helper->getInstrucoes();
+            ?>
+          <?php endif; ?>
+        </p>
+      <?php else : ?>
+        <p><?php echo __('Your order # is: <span>%1</span>.', $order->getIncrementId()); ?></p>
+      <?php endif; ?>
+      <button onclick="window.open('<?php echo $boleto; ?>', 'Download')">Visualizar <?php echo ($payment->getMethod() === "cc") ? "comprovante" : "boleto" ?></button>
+    <?php endif; ?>
+  </div>
+<?php endif; ?>

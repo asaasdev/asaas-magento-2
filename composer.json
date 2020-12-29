@@ -1,0 +1,17 @@
+{
+    "name": "asaas/module-magento2",
+    "description": "",
+    "type": "magento2-module",
+    "license": "OSL-3.0",
+    "authors": [],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Asaas\\Magento2\\": ""
+        }
+    }
+}

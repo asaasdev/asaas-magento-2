@@ -1,0 +1,5 @@
+<?php
+if ($block->getPaymentMethod() == 'boleto'):
+	$boletoUrl =  $block->getPaymentInfo(); ?>
+	<input class="action primary btn-boleto" type="button" id="boleto" onclick="window.open('<?php echo $boletoUrl['url'] ?>');" value="<?php echo $boletoUrl['texto'] ?>"/>
+<?php endif; ?>

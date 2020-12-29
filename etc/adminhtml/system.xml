@@ -1,0 +1,183 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+  <system>
+    <section id="payment">
+      <group id="asaasmagento2" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Asaas Pagamentos</label>
+        <!--Inicio configurações Gerais-->
+        <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+          <label>Ativado</label>
+          <comment>Ativar ou desativar o módulo por completo.</comment>
+          <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <group id="general_options" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+          <depends>
+            <field id="active">1</field>
+          </depends>
+          <label>Configurações Gerais</label>
+          <field id="webapi" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>URL para Webhooks de cobrança</label>
+            <frontend_model>Asaas\Magento2\Block\System\Config\Form\Field\Disable</frontend_model>
+            <comment><![CDATA[Para habilitar o webhook, <a target="_blank" href="https://www.asaas.com/config/index?tab=pushNotification">acesse a Aba Integração na área Minha Conta</a> e informe a URL da sua aplicação que deve receber o POST do Asaas. Lembre-se de selecionar a versão da API "v3" ao habilitar o webhook. Clique <a target="_blank" href="https://asaasv3.docs.apiary.io/#introduction/webhooks">aqui </a> para a documentação oficial do Asaas]]></comment>
+          </field>
+          <field id="api_key" translate="label" type="obscure" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>API Key</label>
+            <comment><![CDATA[Para obter sua API Key <a target="_blank" href="https://www.asaas.com/config/index?tab=pushNotification">acesse a Aba Integração na área Minha Conta.</a> Clique <a target="_blank" href="https://asaasv3.docs.apiary.io/#introduction/autenticacao">aqui </a> para a documentação oficial do Asaas]]></comment>
+            <validate>required-entry</validate>
+            <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+            <depends>
+              <field id="payment/asaasmagento2/general_options/active">1</field>
+            </depends>
+          </field>
+          <field id="token_webhook" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Token de autenticação</label>
+            <comment><![CDATA[Um token para autenticar as requisições vindas do Webhook do Asaas. Este token pode ser informado na área Minha Conta, aba Integração. Clique <a target="_blank" href="https://asaasv3.docs.apiary.io/#introduction/webhooks">aqui </a> para a documentação oficial do Asaas]]></comment>
+            <depends>
+              <field id="payment/asaasmagento2/general_options/active">1</field>
+            </depends>
+          </field>
+          <field id="debug" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Debug</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <depends>
+              <field id="payment/asaasmagento2/general_options/active">1</field>
+            </depends>
+          </field>
+          <field id="ambiente" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Ambiente</label>
+            <source_model>Asaas\Magento2\Model\Config\Source\Ambiente</source_model>
+            <depends>
+              <field id="payment/asaasmagento2/general_options/active">1</field>
+            </depends>
+          </field>
+          <field id="active_notifications" translate="label" type="select" sortOrder="398" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Habilitar notificações entre Asaas e comprador</label>
+            <comment>Habilita notificações ao ser realizado uma compra.</comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <depends>
+              <field id="active_cc">1</field>
+            </depends>
+          </field>
+          <field id="sort_order" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Ordem de exibição</label>
+            <comment>Ordem de exibição em relação a outras formas de pagamento.</comment>
+            <depends>
+              <field id="payment/asaasmagento2/general_options/active">1</field>
+            </depends>
+          </field>
+        </group>
+        <!--Fim das configurações gerais-->
+        <!-- Opçõe cartão de crédito -->
+        <group id="options_cc" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+          <depends>
+            <field id="active">1</field>
+          </depends>
+          <label>Configurações Cartão de crédito</label>
+          <field id="active_cc" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Habilitado</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+          </field>
+          <field id="parcelas" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Parcelas</label>
+            <comment>Deve ser usado ponto. Ex: 1.99 ou 5.75</comment>
+            <frontend_model>Asaas\Magento2\Block\Adminhtml\Form\Field\Parcelas</frontend_model>
+            <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+            <depends>
+              <field id="active_cc">1</field>
+            </depends>
+            <validate>required-entry</validate>
+          </field>
+          <field id="cctypes" translate="label" type="multiselect" sortOrder="399" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Bandeiras Disponiveis</label>
+            <source_model>Asaas\Magento2\Model\Config\Source\Tipos</source_model>
+            <depends>
+              <field id="active_cc">1</field>
+            </depends>
+          </field>
+          <field id="min_parcela" translate="label" type="text" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Valor mínimo da parcela</label>
+            <depends>
+              <field id="active_cc">1</field>
+            </depends>
+            <validate>required-entry</validate>
+          </field>
+        </group>
+        <!--Fim das opções de cc-->
+        <!-- Opçõe boleto -->
+        <group id="options_boleto" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>Configurações de Boleto</label>
+          <depends>
+            <field id="active">1</field>
+          </depends>
+          <field id="active_billet" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Habilitado</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+          </field>
+          <field id="validade" translate="label" type="text" sortOrder="403" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Dias de validade do boleto</label>
+            <validate>required-entry</validate>
+            <depends>
+              <field id="active_billet">1</field>
+            </depends>
+          </field>
+          <field id="instrucoes" translate="label" type="text" sortOrder="404" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Mensagem ao usuário</label>
+            <comment>Mensagem exibida na tela de agradecimento após finalização do pedido.</comment>
+            <depends>
+              <field id="active_billet">1</field>
+            </depends>
+          </field>
+          <group id="options_boleto_discount" translate="label" type="text" sortOrder="405" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Configurações de Desconto</label>
+            <field id="type_discount" translate="label" type="select" sortOrder="405" showInDefault="1" showInWebsite="1" showInStore="0">
+              <label>Tipo do Desconto</label>
+              <comment>Valor fixo ou Percentual</comment>
+              <source_model>Asaas\Magento2\Model\Config\Source\Discount</source_model>
+              <depends>
+                <field id="active_billet">1</field>
+              </depends>
+              <validate>required-entry</validate>
+            </field>
+            <field id="value_discount" translate="label" type="text" sortOrder="405" showInDefault="1" showInWebsite="1" showInStore="0">
+              <label>Valor do Desconto</label>
+              <depends>
+                <field id="active_billet">1</field>
+              </depends>
+              <validate>required-entry</validate>
+            </field>
+            <field id="due_limit_days" translate="label" type="text" sortOrder="405" showInDefault="1" showInWebsite="1" showInStore="0">
+              <label>Dias Válidos para aplicar o Desconto</label>
+              <comment>Dias antes do vencimento para aplicar desconto. Ex: 0 = até o vencimento, 1 = até um dia antes, 2 = até dois dias antes, e assim por diante</comment>
+              <depends>
+                <field id="active_billet">1</field>
+              </depends>
+              <validate>required-entry</validate>
+            </field>
+          </group>
+          <group id="options_boleto_interest" translate="label" type="text" sortOrder="406" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Configurações de Juros</label>
+            <field id="value_interest" translate="label" type="text" sortOrder="405" showInDefault="1" showInWebsite="1" showInStore="0">
+              <label>Percentual de Juros</label>
+              <validate>required-entry</validate>
+              <depends>
+                <field id="active_billet">1</field>
+              </depends>
+              <comment>Percentual de juros ao mês sobre o valor da cobrança para pagamento após o vencimento</comment>
+            </field>
+          </group>
+          <group id="options_boleto_fine" translate="label" type="text" sortOrder="407" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Configurações de Multa</label>
+            <field id="value_fine" translate="label" type="text" sortOrder="405" showInDefault="1" showInWebsite="1" showInStore="0">
+              <label>Percentual de Multa</label>
+              <validate>required-entry</validate>
+              <depends>
+                <field id="active_billet">1</field>
+              </depends>
+              <comment>Percentual de multa sobre o valor da cobrança para pagamento após o vencimento</comment>
+            </field>
+          </group>
+        </group>
+        <!--Fim das opções de boleto-->
+      </group>
+    </section>
+  </system>
+</config> 
