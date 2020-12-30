@@ -22,7 +22,7 @@
 ### Instalar usando o Composer
 
 1. Instale via packagist 
-   - ```composer require asaas/magento```
+   - ```composer require asaas/module-magento2```
        - Neste momento, podem ser solicitadas suas credenciais de autenticação do Magento. Caso tenha alguma dúvida, há uma descrição de como proceder nesse [link da documentação oficial](http://devdocs.magento.com/guides/v2.0/install-gde/prereq/connect-auth.html).
 2. Execute os comandos:
    - ```php bin/magento setup:upgrade```
