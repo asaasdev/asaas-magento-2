@@ -151,7 +151,7 @@ define(
           }
         }
         const minParcelas = cc.min_parcela;
-        const grandTotal = cc.grand_total;
+        const grandTotal = window.checkoutConfig.totalsData.base_grand_total;
         let parcelas = {};
 
         if (grandTotal < minParcelas) {
