@@ -108,7 +108,7 @@ class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
         }
 
         $newUser = (array)$this->createUser($dataUser);
-        $currentUser = $user['data'][0]->id;
+        $currentUser = $newUser['id'];
       }
 
       //Monta os dados para uma cobrança simples com boleto
