@@ -117,7 +117,7 @@ class Cc extends \Magento\Payment\Model\Method\AbstractMethod {
         }
 
         $newUser = (array)$this->createUser($dataUser);
-        $currentUser = $user['data'][0]->id;
+        $currentUser = $newUser['id'];
       }
 
       $values = explode("-", $paymentInfo['installments']);
