@@ -6,9 +6,10 @@ define(
     'Magento_Checkout/js/model/full-screen-loader',
     'Magento_Checkout/js/model/payment/additional-validators',
     'Magento_Payment/js/model/credit-card-validation/validator',
-    'Magento_Ui/js/model/messageList'
+    'Magento_Ui/js/model/messageList',
+    'Magento_Checkout/js/model/quote'
   ],
-  function (Component, $, i, j, k, l, messageList) {
+  function (Component, $, i, j, k, l, messageList, quote) {
 
     'use strict';
 
@@ -151,7 +152,7 @@ define(
           }
         }
         const minParcelas = cc.min_parcela;
-        const grandTotal = window.checkoutConfig.totalsData.base_grand_total;
+        const grandTotal = quote.totals().grand_total;
         let parcelas = {};
 
         if (grandTotal < minParcelas) {
