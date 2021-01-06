@@ -24,7 +24,7 @@ class Data extends AbstractHelper {
   public function getUrl() {
     if ($this->getConfig('payment/asaasmagento2/general_options/ambiente') === 'production') {
       return !$this->getConfig('payment/asaasmagento2/general_options/url_prod') ?
-        "https://www.asaas.com.br" :
+        "https://www.asaas.com" :
         $this->getConfig('payment/asaasmagento2/general_options/url_prod');
     } else {
       return !$this->getConfig('payment/asaasmagento2/general_options/url_dev') ?
