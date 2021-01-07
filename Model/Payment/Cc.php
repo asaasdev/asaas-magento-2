@@ -50,7 +50,7 @@ class Cc extends \Magento\Payment\Model\Method\AbstractMethod {
       $logger,
       $resource,
       $resourceCollection,
-      $data,
+      $data
     );
     $this->helperData = $helper;
     $this->checkoutSession = $checkout;
