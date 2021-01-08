@@ -81,19 +81,21 @@ class Cc extends \Magento\Payment\Model\Method\AbstractMethod {
       $shippingaddress = $order->getShippingAddress();
       $customer = $this->_customerRepositoryInterface->load($order->getCustomerId());
 
-      if(!isset($shippingaddress->getStreet()[2])){
+      if (!isset($shippingaddress->getStreet()[2])) {
         throw new \Exception("Por favor, preencha seu endereço corretamente.", 1);
       }
 
-      if(!$customer->getTaxvat()){
+      if (!$customer->getTaxvat()) {
         $cpfCnpj = $paymentInfo['cc_owner_cpf'];
-      }
-      else {
+      } else {
         $cpfCnpj = $customer->getTaxvat();
       }
-      
+
       //Verifica a existência do usuário na Asaas obs: colocar cpf aqui
       $user = (array)$this->userExists(preg_replace('/\D/', '', $cpfCnpj));
+      if (!$user) {
+        throw new \Exception("Por favor, verifique suas Credenciais (Ambiente, ApiKey)", 1);
+      }
 
       if (count($user['data']) >= 1) {
         $currentUser = $user['data'][0]->id;
@@ -117,6 +119,9 @@ class Cc extends \Magento\Payment\Model\Method\AbstractMethod {
         }
 
         $newUser = (array)$this->createUser($dataUser);
+        if (!$newUser) {
+          throw new \Exception("Por favor, verifique suas Credenciais (Ambiente, ApiKey)", 1);
+        }
         $currentUser = $newUser['id'];
       }
 
@@ -124,6 +129,7 @@ class Cc extends \Magento\Payment\Model\Method\AbstractMethod {
 
       //Monta o Array para o envio das informações ao Asaas
       $request = [
+        'origin' => 'Magento',
         'customer' => $currentUser,
         'billingType' => 'CREDIT_CARD',
         'installmentCount' => (int)$values[0],
