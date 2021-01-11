@@ -86,6 +86,9 @@ class Data extends AbstractHelper {
   }
   public function getInstallments() {
     $installments = json_decode($this->getConfig('payment/asaasmagento2/options_cc/parcelas'));
+    if(!$installments){
+      return false;
+    }
     $i = 1;
     $array = (array)$installments;
     foreach ($array as $k => $v) {
