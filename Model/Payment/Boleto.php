@@ -85,6 +85,9 @@ class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
 
       //Verifica a existência do usuário na Asaas obs: colocar cpf aqui
       $user = (array)$this->userExists($paymentInfo['boleto_owner_cpf']);
+      if (!$user) {
+        throw new \Exception("Por favor, verifique suas Credenciais (Ambiente, ApiKey)", 1);
+      }
 
       if (count($user['data']) >= 1) {
         $currentUser = $user['data'][0]->id;
@@ -108,6 +111,9 @@ class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
         }
 
         $newUser = (array)$this->createUser($dataUser);
+        if (!$newUser) {
+          throw new \Exception("Por favor, verifique suas Credenciais (Ambiente, ApiKey)", 1);
+        }
         $currentUser = $newUser['id'];
       }
 
@@ -118,6 +124,7 @@ class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
       $request['externalReference'] = $order->getIncrementId();
       $request['dueDate'] = $date->format('Y-m-d');
       $request['description'] = "Pedido " . $order->getIncrementId();
+      $request['origin'] = 'Magento';
 
       //Informações de Desconto
       $request['discount']['value'] = $discount['value_discount'];
