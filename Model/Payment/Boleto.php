@@ -76,8 +76,7 @@ class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
 
       //pegando dados do pedido do clioente
       $order = $payment->getOrder();
-      $billingaddress = $order->getBillingAddress();
-      $shippingaddress = $order->getShippingAddress();
+      $shippingaddress = $order->getBillingAddress();
 
       if (!isset($shippingaddress->getStreet()[2])) {
         throw new \Exception("Por favor, preencha seu endereço corretamente.", 1);

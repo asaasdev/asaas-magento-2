@@ -7,7 +7,7 @@
 use Magento\Customer\Helper\Address;
 
 /** @var \Magento\Customer\Block\Form\Register $block */
-/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Framework\block $block */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 
 /** @var Magento\Customer\Helper\Address $addressHelper */
@@ -21,16 +21,16 @@ $formData = $block->getFormData();
 <?php /* Extensions placeholder */ ?>
 <?= $block->getChildHtml('customer.form.register.extra') ?>
 <form class="form create account form-create-account"
-      action="<?= $escaper->escapeUrl($block->getPostActionUrl()) ?>"
+      action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
       method="post"
       id="form-validate"
       enctype="multipart/form-data"
       autocomplete="off">
     <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
     <fieldset class="fieldset create info">
-        <legend class="legend"><span><?= $escaper->escapeHtml(__('Personal Information')) ?></span></legend><br>
-        <input type="hidden" name="success_url" value="<?= $escaper->escapeUrl($block->getSuccessUrl()) ?>">
-        <input type="hidden" name="error_url" value="<?= $escaper->escapeUrl($block->getErrorUrl()) ?>">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Personal Information')) ?></span></legend><br>
+        <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>">
+        <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>">
         <?= $block->getLayout()
                 ->createBlock(\Magento\Customer\Block\Widget\Name::class)
                 ->setObject($formData)
@@ -40,13 +40,13 @@ $formData = $block->getFormData();
             <div class="field choice newsletter">
                 <input type="checkbox"
                        name="is_subscribed"
-                       title="<?= $escaper->escapeHtmlAttr(__('Sign Up for Newsletter')) ?>"
+                       title="<?= $block->escapeHtmlAttr(__('Sign Up for Newsletter')) ?>"
                        value="1"
                        id="is_subscribed"
                        <?php if ($formData->getIsSubscribed()): ?>checked="checked"<?php endif; ?>
                        class="checkbox">
                 <label for="is_subscribed" class="label">
-                    <span><?= $escaper->escapeHtml(__('Sign Up for Newsletter')) ?></span>
+                    <span><?= $block->escapeHtml(__('Sign Up for Newsletter')) ?></span>
                 </label>
             </div>
             <?php /* Extensions placeholder */ ?>
@@ -73,7 +73,7 @@ $formData = $block->getFormData();
         <?php $postcodeValidationClass = $addressHelper->getAttributeValidationClass('postcode'); ?>
         <?php $regionValidationClass = $addressHelper->getAttributeValidationClass('region'); ?>
         <fieldset class="fieldset address">
-            <legend class="legend"><span><?= $escaper->escapeHtml(__('Address Information')) ?></span></legend><br>
+            <legend class="legend"><span><?= $block->escapeHtml(__('Address Information')) ?></span></legend><br>
             <input type="hidden" name="create_address" value="1" />
 
             <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
@@ -102,10 +102,10 @@ $formData = $block->getFormData();
                 <div class="control">
                     <input type="text"
                            name="street[]"
-                           value="<?= $escaper->escapeHtmlAttr($formData->getStreet(0)) ?>"
+                           value="<?= $block->escapeHtmlAttr($formData->getStreet(0)) ?>"
                            title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('street') ?>"
                            id="street_1"
-                           class="input-text <?= $escaper->escapeHtmlAttr($_streetValidationClass) ?>">
+                           class="input-text <?= $block->escapeHtmlAttr($_streetValidationClass) ?>">
                     <div class="nested">
                         <?php
                             $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass));
@@ -114,15 +114,15 @@ $formData = $block->getFormData();
                         <?php for ($_i = 2, $_n = $streetLines; $_i <= $_n; $_i++): ?>
                             <div class="field additional">
                                 <label class="label" for="street_<?= /* @noEscape */ $_i ?>">
-                                    <span><?= $escaper->escapeHtml(__('Address')) ?></span>
+                                    <span><?= $block->escapeHtml(__('Address')) ?></span>
                                 </label>
                                 <div class="control">
                                     <input type="text"
                                            name="street[]"
-                                           value="<?= $escaper->escapeHtml($formData->getStreetLine($_i - 1)) ?>"
-                                           title="<?= $escaper->escapeHtmlAttr(__('Street Address %1', $_i)) ?>"
+                                           value="<?= $block->escapeHtml($formData->getStreetLine($_i - 1)) ?>"
+                                           title="<?= $block->escapeHtmlAttr(__('Street Address %1', $_i)) ?>"
                                            id="street_<?= /* @noEscape */ $_i ?>"
-                                           class="input-text <?= $escaper->escapeHtmlAttr($_streetValidationClass) ?>">
+                                           class="input-text <?= $block->escapeHtmlAttr($_streetValidationClass) ?>">
                                 </div>
                             </div>
                         <?php endfor; ?>
@@ -149,16 +149,16 @@ $formData = $block->getFormData();
                             title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
                             class="validate-select region_id">
                         <option value="">
-                            <?= $escaper->escapeHtml(__('Please select a region, state or province.')) ?>
+                            <?= $block->escapeHtml(__('Please select a region, state or province.')) ?>
                         </option>
                     </select>
                     <?= /* @noEscape */ $secureRenderer->renderStyleAsTag("display: none;", 'select#region_id') ?>
                     <input type="text"
                            id="region"
                            name="region"
-                           value="<?= $escaper->escapeHtml($block->getRegion()) ?>"
+                           value="<?= $block->escapeHtml($block->getRegion()) ?>"
                            title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
-                           class="input-text <?= $escaper->escapeHtmlAttr($regionValidationClass) ?>">
+                           class="input-text <?= $block->escapeHtmlAttr($regionValidationClass) ?>">
                     <?= /* @noEscape */ $secureRenderer->renderStyleAsTag("display: none;", 'input#region') ?>
                 </div>
             </div>
@@ -170,9 +170,9 @@ $formData = $block->getFormData();
                 <div class="control">
                     <input type="text"
                            name="city"
-                           value="<?= $escaper->escapeHtmlAttr($formData->getCity()) ?>"
+                           value="<?= $block->escapeHtmlAttr($formData->getCity()) ?>"
                            title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
-                           class="input-text <?= $escaper->escapeHtmlAttr($cityValidationClass) ?>"
+                           class="input-text <?= $block->escapeHtmlAttr($cityValidationClass) ?>"
                            id="city">
                 </div>
             </div>
@@ -184,11 +184,11 @@ $formData = $block->getFormData();
                 <div class="control">
                     <input type="text"
                            name="postcode"
-                           value="<?= $escaper->escapeHtmlAttr($formData->getPostcode()) ?>"
+                           value="<?= $block->escapeHtmlAttr($formData->getPostcode()) ?>"
                            title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>"
                            id="zip"
                            class="input-text validate-zip-international
-                            <?= $escaper->escapeHtmlAttr($postcodeValidationClass) ?>">
+                            <?= $block->escapeHtmlAttr($postcodeValidationClass) ?>">
                 </div>
             </div>
 
@@ -205,39 +205,39 @@ $formData = $block->getFormData();
 
     <?php endif; ?>
     <fieldset class="fieldset create account"
-              data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>">
-        <legend class="legend"><span><?= $escaper->escapeHtml(__('Sign-in Information')) ?></span></legend><br>
+              data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Sign-in Information')) ?></span></legend><br>
         <div class="field required">
-            <label for="email_address" class="label"><span><?= $escaper->escapeHtml(__('Email')) ?></span></label>
+            <label for="email_address" class="label"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
             <div class="control">
                 <input type="email"
                        name="email"
                        autocomplete="email"
                        id="email_address"
-                       value="<?= $escaper->escapeHtmlAttr($formData->getEmail()) ?>"
-                       title="<?= $escaper->escapeHtmlAttr(__('Email')) ?>"
+                       value="<?= $block->escapeHtmlAttr($formData->getEmail()) ?>"
+                       title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
                        class="input-text"
                        data-mage-init='{"mage/trim-input":{}}'
                        data-validate="{required:true, 'validate-email':true}">
             </div>
         </div>
         <div class="field password required">
-            <label for="password" class="label"><span><?= $escaper->escapeHtml(__('Password')) ?></span></label>
+            <label for="password" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
             <div class="control">
                 <input type="password" name="password" id="password"
-                       title="<?= $escaper->escapeHtmlAttr(__('Password')) ?>"
+                       title="<?= $block->escapeHtmlAttr(__('Password')) ?>"
                        class="input-text"
                        data-password-min-length="<?=
-                        $escaper->escapeHtmlAttr($block->getMinimumPasswordLength()) ?>"
+                        $block->escapeHtmlAttr($block->getMinimumPasswordLength()) ?>"
                        data-password-min-character-sets="<?=
-                        $escaper->escapeHtmlAttr($block->getRequiredCharacterClassesNumber()) ?>"
+                        $block->escapeHtmlAttr($block->getRequiredCharacterClassesNumber()) ?>"
                        data-validate="{required:true, 'validate-customer-password':true}"
                        autocomplete="off">
                 <div id="password-strength-meter-container" data-role="password-strength-meter" aria-live="polite">
                     <div id="password-strength-meter" class="password-strength-meter">
-                        <?= $escaper->escapeHtml(__('Password Strength')) ?>:
+                        <?= $block->escapeHtml(__('Password Strength')) ?>:
                         <span id="password-strength-meter-label" data-role="password-strength-meter-label">
-                            <?= $escaper->escapeHtml(__('No Password')) ?>
+                            <?= $block->escapeHtml(__('No Password')) ?>
                         </span>
                     </div>
                 </div>
@@ -246,12 +246,12 @@ $formData = $block->getFormData();
         </div>
         <div class="field confirmation required">
             <label for="password-confirmation" class="label">
-                <span><?= $escaper->escapeHtml(__('Confirm Password')) ?></span>
+                <span><?= $block->escapeHtml(__('Confirm Password')) ?></span>
             </label>
             <div class="control">
                 <input type="password"
                        name="password_confirmation"
-                       title="<?= $escaper->escapeHtmlAttr(__('Confirm Password')) ?>"
+                       title="<?= $block->escapeHtmlAttr(__('Confirm Password')) ?>"
                        id="password-confirmation"
                        class="input-text"
                        data-validate="{required:true, equalTo:'#password'}"
@@ -264,14 +264,14 @@ $formData = $block->getFormData();
         <div class="primary">
             <button type="submit"
                     class="action submit primary"
-                    title="<?= $escaper->escapeHtmlAttr(__('Create an Account')) ?>">
-                <span><?= $escaper->escapeHtml(__('Create an Account')) ?></span>
+                    title="<?= $block->escapeHtmlAttr(__('Create an Account')) ?>">
+                <span><?= $block->escapeHtml(__('Create an Account')) ?></span>
             </button>
         </div>
         <div class="secondary">
             <a class="action back"
-               href="<?= $escaper->escapeUrl($block->getBackUrl()) ?>">
-                <span><?= $escaper->escapeHtml(__('Back')) ?></span>
+               href="<?= $block->escapeUrl($block->getBackUrl()) ?>">
+                <span><?= $block->escapeHtml(__('Back')) ?></span>
             </a>
         </div>
     </div>
@@ -321,7 +321,6 @@ $scriptString .= <<<script
 });
 script;
 ?>
-<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
 <?php if ($block->getShowAddressFields()): ?>
     <?php
     $regionJson = /* @noEscape */ $directoryHelper->getRegionJson();
