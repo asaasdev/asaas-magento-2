@@ -78,7 +78,7 @@ class Cc extends \Magento\Payment\Model\Method\AbstractMethod {
 
       //pegando dados do pedido do clioente
       $order = $payment->getOrder();
-      $shippingaddress = $order->getShippingAddress();
+      $shippingaddress = $order->getBillingAddress();
       $customer = $this->_customerRepositoryInterface->load($order->getCustomerId());
 
       if (!isset($shippingaddress->getStreet()[2])) {
