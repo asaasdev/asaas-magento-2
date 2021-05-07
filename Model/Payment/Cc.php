@@ -126,6 +126,9 @@ class Cc extends \Magento\Payment\Model\Method\AbstractMethod {
       }
 
       $values = explode("-", $paymentInfo['installments']);
+      $installments = $this->helperData->getInstallments();
+      $installmentInterest = $installments[(int)$values[0]];
+      $installmentValue = (($order->getGrandTotal() * (($installmentInterest / 100) + 1)) / (int)$values[0]);
 
       //Monta o Array para o envio das informações ao Asaas
       $request = [
@@ -133,7 +136,7 @@ class Cc extends \Magento\Payment\Model\Method\AbstractMethod {
         'customer' => $currentUser,
         'billingType' => 'CREDIT_CARD',
         'installmentCount' => (int)$values[0],
-        'installmentValue' => (float)$values[1],
+        'installmentValue' => $installmentValue,
         'dueDate' => $date->format('Y-m-d'),
         'description' => "Pedido " . $order->getIncrementId(),
         'externalReference' => $order->getIncrementId(),
@@ -156,7 +159,7 @@ class Cc extends \Magento\Payment\Model\Method\AbstractMethod {
         ],
         'remoteIp' => $order["remote_ip"],
       ];
-
+      
       $paymentDone = (array)$this->doPayment($request);
 
       if (isset($paymentDone['errors'])) {
