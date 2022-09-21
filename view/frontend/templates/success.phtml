@@ -9,7 +9,7 @@ if ($payment->getMethod() === "cc" || $payment->getMethod() === "boleto") :
     <?php if ($order->getIncrementId()) : ?>
       <?php if ($block->getCustomerId()) : ?>
         <p>
-          <?php echo __('Your order number is: ' . $order->getIncrementId()); ?>
+          <?php echo __('Your order number is: ') . $order->getIncrementId(); ?>
         </p>
         <p>
           <?php if ($payment->getMethod() === "boleto") : ?>
