@@ -15,9 +15,7 @@
 
 ### Instalação do Módulo Asaas:
 
-- Realize o download do módulo e siga os seguintes passos de acordo com a forma que sua loja foi instalada:
-
-#### [Asaas-Magento2 ](https://github.com/tezusecommerce/asaas-magento-2.git)
+- Realize o download do módulo, clonando esse repositório, e siga os seguintes passos de acordo com a forma que sua loja foi instalada:
 
 ### Instalar usando o Composer
 
