@@ -1,0 +1,28 @@
+<?php
+if ($block->escapeHtml($block->getPaymentMethodByOrder()) == 'pix'):
+  $order = $block->getOrder();
+  $qrcode = $order->getData('pix_asaas_qrcode');
+  $pixPayload = $order->getData('pix_asaas_payload');
+  ?>
+  <div class="pix_payment_info">
+    <img class="qrcode-image" src="data:image/png;base64,<?php echo $block->escapeUrl($qrcode) ?>" />
+    <div class="linha-digitavel">
+      <textarea id="qrcode-text" class="qrcode-text" rows="4"><?php echo $block->escapeHtml($pixPayload) ?></textarea><br>
+      <button class="action secondary row" id="button-copy" onclick="document.execCommand('copy', false, document.getElementById('qrcode-text').select());">
+        <?php echo $block->escapeHtml(__('Copiar PIX')) ?>
+      </button>
+    </div>
+  </div>
+  <script>
+    require(['jquery', 'Magento_Ui/js/modal/modal'], function($, modal) {
+      let configs = {
+        title: '<?php echo $block->escapeJsQuote(__('Pix')) ?>',
+        buttons: []
+      }
+
+      function copyTextSucess() {
+        document.execCommand('copy', false, document.getElementById('qrcode-text').select());
+      }
+    });
+  </script>
+<?php endif; ?>

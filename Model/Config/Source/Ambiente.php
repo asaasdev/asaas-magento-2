@@ -7,6 +7,6 @@ class Ambiente
    * @var string[] 
    */      public function toOptionArray()
   {
-    return [['value' => 'production', 'label' => __('Produção')], ['value' => 'dev', 'label' => __('Desenvolvimento')],];
+    return [['value' => 'production', 'label' => __('Production')], ['value' => 'dev', 'label' => __('Development')],];
   }
 }

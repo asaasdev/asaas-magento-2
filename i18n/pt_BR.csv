@@ -1,0 +1,97 @@
+Yes,Sim
+No,Não
+Add,Adicionar
+Production,Produção
+Development,Desenvolvimento
+Installments,Parcelas
+"Fixed Value","Valor Fixo"
+Percentage,Percentual
+"Token Webhook not valid.","Token de Webhook inválido."
+"Order Id not found","Id do pedido não encontrado"
+Action,Ação
+"Add after","Adicionar depois"
+Delete,Remover
+"Credit Card Type","Tipo de Cartão de Crédito"
+"--Please Select--","--Favor Selecionar--"
+"Credit Card Number2","Número do Cartão de Crédito2"
+"Expiration Date","Data de Validade"
+"Card Verification Number","Código de Verificação do Cartão"
+"Card Verification Number Visual Reference","Referência Visual do Código de Verificação do Cartão"
+"What is this?","O que é isso?"
+"* Required Fields","* Campos Obrigatórios"
+"Account Information","Informação da conta"
+"Change Email","Trocar Email"
+"Change Password","Rrocar Senha"
+"Change Email and Password","Trocar Email e Senha"
+"Current Password","Senha Atual"
+"New Password","Senha Nova"
+"Password Strength","Força da Senha"
+"No Password","Sem Senha"
+"Confirm New Password","Confirmar Senha Nova"
+Save,Salvar
+"Go back","Voltar"
+"Personal Information","Informações Pessoais"
+"Sign Up for Newsletter","Inscreva-se no Boletim Informativo"
+"Address Information","Informação de Endereço"
+Address,Endereço
+"Street Address %1","Rua %1"
+"Please select a region, state or province.","Selecione uma região, estado ou província."
+"Sign-in Information","Informações de login"
+Password,Senha
+"Confirm Password","Confirmar Senha"
+"Create an Account","Criar uma Conta"
+Back,Voltar
+"Payment Pix Information","Informações sobre Pix de Pagamento"
+"Copy PIX","Copiar PIX"
+"'Your order number is: ' .","'Seu número de pedido é: ' ."
+"Your order # is: <span>%1</span>.","Seu # de pedido é: <span>%1</span>."
+"Place Order","Realizar Pedido"
+"Credit Card Information","Informações do Cartão de Crédito"
+"Credit Card Owner Name","Nome do Proprietário do Cartão de Crédito"
+Phone,Telefone
+"Credit Card Number","Número do Cartão de Crédito"
+Month,Mês
+Year,Ano
+Select,Selecionar
+"Asaas Payments","Asaas Pagamentos"
+Active,Ativo
+"Activate or deactivate entire module.","Ativar ou desativar o módulo inteiro."
+"General Settings","Configurações Gerais"
+"URL for Billing Webhooks","URL para Webhooks de Faturamento"
+"To enable the webhook, <a target=""_blank"" href=""https://www.asaas.com/config/index?tab=pushNotification"">access the Integration Tab in the My Account area</a> and enter the URL of your application that should receive the POST from Asaas. Remember to select API version ""v3"" when enabling the webhook. Click <a target=""_blank"" href=""https://asaasv3.docs.apiary.io/#introduction/webhooks"">here </a> for the official Asaas documentation","Para habilitar o webhook, <a target=""_blank"" href=""https://www.asaas.com/config/index?tab=pushNotification"">acesse a Aba Integração na área Minha Conta</a> e informe a URL da sua aplicação que deve receber o POST do Asaas. Lembre-se de selecionar a versão da API ""v3"" ao habilitar o webhook. Clique <a target=""_blank"" href=""https://asaasv3.docs.apiary.io/#introduction/webhooks"">aqui </a> para a documentação oficial do Asaas"
+"API Key","Chave da API"
+"To obtain your API Key <a target=""_blank"" href=""https://www.asaas.com/config/index?tab=pushNotification"">access the Integration Tab in the My Account area.</a> Click <a target=""_blank"" href=""https://asaasv3.docs.apiary.io/#introduction/autenticacao"">here </a> for the official Asaas documentation","Para obter sua chave da API <a target=""_blank"" href=""https://www.asaas.com/config/index?tab=pushNotification"">acesse a Aba Integração na área Minha Conta.</a> Clique <a target=""_blank"" href=""https://asaasv3.docs.apiary.io/#introduction/autenticacao"">aqui </a> para a documentação oficial do Asaas"
+"Authentication Token","Token de Autenticação"
+"A token to authenticate requests coming from the Asaas Webhook. This token can be entered in the My Account area, Integration tab. Click <a target=""_blank"" href=""https://asaasv3.docs.apiary.io/#introduction/webhooks"">here </a> for the official Asaas documentation","Um token para autenticar as requisições vindas do Webhook do Asaas. Este token pode ser informado na área Minha Conta, aba Integração. Clique <a target=""_blank"" href=""https://asaasv3.docs.apiary.io/#introduction/webhooks"">aqui </a> para a documentação oficial do Asaas"
+Debug,Debug
+Environment,Ambiente
+"Enable notifications between Asaas and buyer","Ativar notificações entre a Asaas e o comprador"
+"Enable notifications when a purchase is made.","Ativar notificações quando uma compra é feita."
+"Display order","Ordem de exibição"
+"Display order in relation to other payment methods.","Ordem de exibição em relação a outras formas de pagamento."
+"Credit Card Settings","Configurações do Cartão de Crédito"
+Enabled,Habilitado
+"Payment Installments","Parcelas"
+"Decimal point should be used. Example: 1.99 or 5.75.","Deve ser usado ponto. Ex: 1.99 ou 5.75."
+"Available Card Brands","Bandeiras de Cartões Disponíveis"
+"Minimum installment amount","Valor mínimo da parcela"
+"Billet Settings","Configurações de Boleto"
+"Billet validity days","Dias de validade do boleto"
+"Message to user","Mensagem ao usuário"
+"Message displayed on the thank you screen after completing the order.","Mensagem exibida na tela de agradecimento após finalização do pedido."
+"Discount Settings","Configurações de Desconto"
+"Discount Type","Tipo do Desconto"
+"Fixed value or percentage","Valor fixo ou Percentual"
+"Discount Value","Valor do Desconto"
+"Valid days to apply the discount","Dias Válidos para aplicar o Desconto"
+"Days before due date to apply discount. Example: 0 = until due date, 1 = up to one day before, 2 = up to two days before, and so on","Dias antes do vencimento para aplicar desconto. Ex: 0 = até o vencimento, 1 = até um dia antes, 2 = até dois dias antes, e assim por diante"
+"Interest Settings","Configurações de Juros"
+"Interest Percentage","Percentual de Juros"
+"Percentage of interest per month on the amount charged for payment after maturity","Percentual de juros ao mês sobre o valor da cobrança para pagamento após o vencimento"
+"Fine Settings","Configurações de Multa"
+"Fine Percentage","Percentual de Multa"
+"Percentage of fine on the amount of the charge for payment after the due date","Percentual de multa sobre o valor da cobrança para pagamento após o vencimento"
+"Pix Settings","Configurações de Pix"
+"Pix expiration days","Dias de validade do pix"
+"Create Invoice if payment was received?","Criar Fatura para o pedido se o pagamento for recebido?"
+"Do you want the Invoice to be triggered every time the asaas notifies you that the payment has been approved?","Você quer que a fatura seja disparada toda vez que o asaas notificar que o pagamento foi aprovado?"

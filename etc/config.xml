@@ -2,22 +2,52 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
   <default>
     <payment>
+      <!-- set default values for required fields in '/etc/adminhtml/system.xml' -->
+      <asaasmagento2>
+        <options_cc>
+          <min_parcela>0.00</min_parcela>
+        </options_cc>
+        <options_boleto>
+          <validade>0</validade>
+          <options_boleto_discount>
+            <value_discount>0.00</value_discount>
+            <due_limit_days>0</due_limit_days>
+          </options_boleto_discount>
+          <options_boleto_interest>
+            <value_interest>0</value_interest>
+          </options_boleto_interest>
+          <options_boleto_fine>
+            <value_fine>0</value_fine>
+          </options_boleto_fine>
+        </options_boleto>
+        <options_pix>
+          <validade>0</validade>
+        </options_pix>
+      </asaasmagento2>
       <cc>
         <payment_action>order</payment_action>        <!-- You can use another method -->
         <model>Asaas\Magento2\Model\Payment\Cc</model>
         <active>1</active>
         <cctypes>AE,VI,MC,DI</cctypes>
         <title>Cartão de Crédito</title>
-        <order_status>pending_payment</order_status>        <!-- set default order status-->
+        <order_status>pending</order_status>        <!-- set default order status-->
       </cc>
       <boleto>
         <active>1</active>
         <model>Asaas\Magento2\Model\Payment\Boleto</model>
-        <order_status>holded</order_status>
+        <order_status>pending</order_status>
         <payment_action>order</payment_action>
         <title>Boleto</title>
         <allowspecific>0</allowspecific>
       </boleto>
+      <pix>
+        <active>1</active>
+        <model>Asaas\Magento2\Model\Payment\Pix</model>
+        <order_status>pending</order_status>
+        <payment_action>order</payment_action>
+        <title>Pix</title>
+        <allowspecific>0</allowspecific>
+      </pix>
     </payment>
   </default>
 </config>

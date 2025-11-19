@@ -24,6 +24,14 @@ class Success extends \Magento\Sales\Block\Order\Totals {
   public function getBoleto() {
     return $this->checkoutSession->getBoleto();
   }
+
+  public function getPixQrCode() {
+    return $this->checkoutSession->getPixQrCode();
+  }
+
+  public function getPixPayload() {
+    return $this->checkoutSession->getPixPayload();
+  }
   
   public function getOrder() {
     return  $this->_order = $this->_orderFactory->create()->loadByIncrementId(

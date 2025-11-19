@@ -1,13 +1,14 @@
 <?php
+
 namespace Asaas\Magento2\Api;
-//use Asaas\Magento2\Api\Data\PointInterface;
+
 /**
  * @api
  */
 interface UpdateStatusesInterface
 {
    /**
-     * Post Company.
+     * Update Order Status.
      *
      * @api
      * @param  mixed $event

@@ -12,5 +12,8 @@
     <method name="boleto">
       <allow_multiple_address>0</allow_multiple_address>
     </method>
+    <method name="pix">
+      <allow_multiple_address>0</allow_multiple_address>
+    </method>
   </methods>
 </payment>

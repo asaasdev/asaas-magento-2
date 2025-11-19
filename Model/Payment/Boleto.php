@@ -12,56 +12,73 @@ namespace Asaas\Magento2\Model\Payment;
 use Exception;
 use Magento\Sales\Model\Order;
 
-class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
+class Boleto extends \Magento\Payment\Model\Method\AbstractMethod
+{
+    protected $_code = "boleto";
+    protected $_isOffline = true;
+    protected $_isInitializeNeeded = false;
 
-  protected $_code = "boleto";
-  protected $_isOffline = true;
-  protected $_isInitializeNeeded = false;
+    public function __construct(
+        \Magento\Framework\Model\Context $context,
+        \Magento\Framework\Registry $registry,
+        \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory,
+        \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory,
+        \Magento\Payment\Helper\Data $paymentData,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Payment\Model\Method\Logger $logger,
+        \Asaas\Magento2\Helper\Data $helper,
+        \Magento\Checkout\Model\Session $checkout,
+        \Magento\Store\Model\StoreManagerInterface $store,
+        \Magento\Framework\Message\ManagerInterface $message,
+        \Magento\Framework\Encryption\EncryptorInterface $encryptor,
+        \Magento\Customer\Model\Customer $customerRepositoryInterface,
+        $resource = null,
+        $resourceCollection = null,
+        array $data = []
+    ) {
+      // Validação manual para manter compatibilidade com PHP 8.4
+      if ($resource !== null && !($resource instanceof \Magento\Framework\Model\ResourceModel\AbstractResource)) {
+          throw new \InvalidArgumentException('Parâmetro $resource deve ser null ou instância de AbstractResource');
+      }
 
-  public function __construct(
-    \Magento\Framework\Model\Context $context,
-    \Magento\Framework\Registry $registry,
-    \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory,
-    \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory,
-    \Magento\Payment\Helper\Data $paymentData,
-    \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-    \Magento\Payment\Model\Method\Logger $logger,
-    \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-    \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-    array $data = [],
-    \Asaas\Magento2\Helper\Data $helper,
-    \Magento\Checkout\Model\Session $checkout,
-    \Magento\Store\Model\StoreManagerInterface $store,
-    \Magento\Framework\Message\ManagerInterface $message,
-    \Magento\Framework\Encryption\EncryptorInterface $encryptor,
-    \Magento\Customer\Model\Customer $customerRepositoryInterface
-  ) {
-    parent::__construct(
-      $context,
-      $registry,
-      $extensionFactory,
-      $customAttributeFactory,
-      $paymentData,
-      $scopeConfig,
-      $logger,
-      $resource,
-      $resourceCollection,
-      $data
-    );
-    $this->helperData = $helper;
-    $this->checkoutSession = $checkout;
-    $this->store = $store;
-    $this->messageInterface = $message;
-    $this->_decrypt = $encryptor;
-    $this->_customerRepositoryInterface = $customerRepositoryInterface;
+      if ($resourceCollection !== null && !($resourceCollection instanceof \Magento\Framework\Data\Collection\AbstractDb)) {
+          throw new \InvalidArgumentException('Parâmetro $resourceCollection deve ser null ou instância de AbstractDb');
+      }
+
+      parent::__construct(
+          $context,
+          $registry,
+          $extensionFactory,
+          $customAttributeFactory,
+          $paymentData,
+          $scopeConfig,
+          $logger,
+          $resource,
+          $resourceCollection,
+          $data
+      );
+
+      $this->helperData = $helper;
+      $this->checkoutSession = $checkout;
+      $this->store = $store;
+      $this->messageInterface = $message;
+      $this->_decrypt = $encryptor;
+      $this->_customerRepositoryInterface = $customerRepositoryInterface;
   }
 
-  public function isAvailable(\Magento\Quote\Api\Data\CartInterface $quote = null) {
-    if (!$this->helperData->getStatusBillet()) {
-      return false;
-    }
-    return parent::isAvailable($quote);
+  public function isAvailable($quote = null)
+  {
+      if ($quote !== null && !($quote instanceof \Magento\Quote\Api\Data\CartInterface)) {
+          throw new \InvalidArgumentException('Parâmetro $quote deve ser null ou instância de CartInterface');
+      }
+  
+      if (!$this->helperData->getStatusBillet()) {
+          return false;
+      }
+  
+      return parent::isAvailable($quote);
   }
+  
 
   public function order(\Magento\Payment\Model\InfoInterface $payment, $amount) {
     try {
@@ -98,11 +115,7 @@ class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
         $dataUser['postalCode'] = $shippingaddress->getPostcode();
 
         //Habilita notificações entre o Asaas e o comprador
-        if (isset($notification)) {
-          $dataUser['notificationDisabled'] = 'false';
-        } else {
-          $dataUser['notificationDisabled'] = 'true';
-        }
+        $dataUser['notificationDisabled'] = $notification ? 'false' : 'true';
 
         //Verifica se foi informado o número foi informado
         if (isset($shippingaddress->getStreet()[1])) {
@@ -142,6 +155,7 @@ class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
       }
       $linkBoleto = $paymentDone['bankSlipUrl'];
       $this->checkoutSession->setBoleto($linkBoleto);
+      $order->setBoletoAsaas($linkBoleto);
     } catch (\Exception $e) {
       throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
     }
@@ -164,6 +178,7 @@ class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
       CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_USERAGENT => "magento",
       CURLOPT_HTTPHEADER => array(
         "access_token: " . $this->_decrypt->decrypt($this->helperData->getAcessToken()),
         "Content-Type: application/json"
@@ -188,6 +203,7 @@ class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
       CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => "POST",
+      CURLOPT_USERAGENT => "magento",
       CURLOPT_POSTFIELDS => json_encode($data),
       CURLOPT_HTTPHEADER => array(
         "access_token: " . $this->_decrypt->decrypt($this->helperData->getAcessToken()),
@@ -212,6 +228,7 @@ class Boleto extends \Magento\Payment\Model\Method\AbstractMethod {
       CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => "POST",
+      CURLOPT_USERAGENT => "magento",
       CURLOPT_POSTFIELDS => json_encode($data),
       CURLOPT_HTTPHEADER => array(
         "access_token: " . $this->_decrypt->decrypt($this->helperData->getAcessToken()),

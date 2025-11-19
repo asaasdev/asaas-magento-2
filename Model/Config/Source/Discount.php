@@ -8,8 +8,8 @@ class Discount {
    * @var string[] 
    */      public function toOptionArray() {
     return [
-      ['value' => 'FIXED', 'label' => __('Valor Fixo')],
-      ['value' => 'PERCENTAGE', 'label' => __('Percentual')], 
+      ['value' => 'FIXED', 'label' => __('Fixed Value')],
+      ['value' => 'PERCENTAGE', 'label' => __('Percentage')], 
     ];
   }
 }

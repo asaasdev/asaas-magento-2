@@ -1,27 +1,60 @@
 <?php
+$helper = \Magento\Framework\App\ObjectManager::getInstance()->get('Asaas\Magento2\Helper\Data');
 $order = $block->getOrder();
 $boleto = $block->getBoleto();
+$qrcode = $block->getPixQrCode();
+$pixPayload = $block->getPixPayload();
 $payment = $order->getPayment();
 $order->getShippingMethod();
-if ($payment->getMethod() === "cc" || $payment->getMethod() === "boleto") :
-?>
-  <div class="checkout-success">
-    <?php if ($order->getIncrementId()) : ?>
-      <?php if ($block->getCustomerId()) : ?>
-        <p>
-          <?php echo __('Your order number is: ' . $order->getIncrementId()); ?>
-        </p>
-        <p>
-          <?php if ($payment->getMethod() === "boleto") : ?>
-            <?php $helper = \Magento\Framework\App\ObjectManager::getInstance()->get('Asaas\Magento2\Helper\Data');
-            echo $helper->getInstrucoes();
-            ?>
-          <?php endif; ?>
-        </p>
-      <?php else : ?>
-        <p><?php echo __('Your order # is: <span>%1</span>.', $order->getIncrementId()); ?></p>
-      <?php endif; ?>
-      <button onclick="window.open('<?php echo $boleto; ?>', 'Download')">Visualizar <?php echo ($payment->getMethod() === "cc") ? "comprovante" : "boleto" ?></button>
-    <?php endif; ?>
-  </div>
+
+$decodedImage = base64_decode($qrcode ?? '');
+$imageName = 'image_' . uniqid() . '.png';
+
+if ($payment->getMethod() === "cc" || $payment->getMethod() === "boleto" || $payment->getMethod() === "pix") :
+    ?>
+    <div class="checkout-success">
+        <?php if ($order->getIncrementId()) : ?>
+            <?php if ($block->getCustomerId()) : ?>
+            <p>
+                <?php echo $block->escapeHtml(__('Your order number is: %1', $order->getIncrementId())); ?>
+            </p>
+            <p>
+                <?php if ($payment->getMethod() === "boleto") : ?>
+                    <?php
+                    echo $block->escapeHtml($helper->getInstrucoes());
+                    ?>
+                <?php endif; ?>
+            </p>
+        <?php else : ?>
+            <p><?php echo $block->escapeHtml(__('Your order # is: <span>%1</span>.', $order->getIncrementId()), ['span']); ?></p>
+        <?php endif; ?>
+
+        <?php if($payment->getMethod() === "cc"): ?>
+            <button onclick="window.open('<?php echo $block->escapeUrl($boleto); ?>', 'Download')">Visualizar comprovante</button>
+        <?php endif; ?>
+        <?php if($payment->getMethod() === "boleto"): ?>
+            <button onclick="window.open('<?php echo $block->escapeUrl($boleto); ?>', 'Download')">Visualizar boleto</button>
+        <?php endif; ?>
+        <?php if($payment->getMethod() === "pix"):?>
+            <p class="pix-instructions"><?php echo $block->escapeHtml($helper->getPixInstructions()); ?></p>
+        <img class="qrcode-image" src="<?php echo $block->escapeHtmlAttr('data:image/png;base64,' . $qrcode); ?>">
+            <div class="linha-digitavel">
+                <textarea id="qrcode-text" class="qrcode-text" rows="4"><?php echo $block->escapeHtml($pixPayload); ?></textarea><br>
+                <button class="action secondary row" id="button-copy" onclick="document.execCommand('copy', false, document.getElementById('qrcode-text').select());">Copiar PIX</button>
+            </div>
+            <script>
+                require(['jquery', 'Magento_Ui/js/modal/modal'], function($, modal) {
+                    let configs = {
+                        title: 'Pix',
+                        buttons: []
+                    }
+
+                    function copyTextSucess() {
+                        document.execCommand('copy', false, document.getElementById('qrcode-text').select());
+                    }
+                });
+            </script>
+        <?php endif; ?>
+        <?php endif; ?>
+    </div>
 <?php endif; ?>

@@ -6,7 +6,7 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-  <preference for="Magento\Sales\Model\Order\Payment\Info" type="Asaas\Magento2\Model\Magento\Sales\Order\Payment\Info" />
+  <!-- <preference for="Magento\Sales\Model\Order\Payment\Info" type="Asaas\Magento2\Model\Magento\Sales\Order\Payment\Info" /> -->
   <type name="Magento\Checkout\Model\CompositeConfigProvider">
     <arguments>
       <argument name="configProviders" xsi:type="array">

@@ -1,5 +1,38 @@
 <?php
-if ($block->getPaymentMethod() == 'boleto'):
-	$boletoUrl =  $block->getPaymentInfo(); ?>
-	<input class="action primary btn-boleto" type="button" id="boleto" onclick="window.open('<?php echo $boletoUrl['url'] ?>');" value="<?php echo $boletoUrl['texto'] ?>"/>
+if ($block->getPaymentMethodByOrder() == 'boleto'):
+  $boletoUrl = $block->getPaymentInfo(); ?>
+  <input class="action primary btn-boleto" type="button" id="boleto" onclick="window.open('<?php echo $block->escapeUrl($boletoUrl['url']) ?>');" value="<?php echo $block->escapeHtml($boletoUrl['texto']) ?>"/>
+<?php endif; ?>
+
+<?php
+if ($block->getPaymentMethodByOrder() == 'pix'):
+  $pix = $block->getPaymentInfo();
+  $order = $block->getOrder();
+  $qrcode = $order->getData('pix_asaas_qrcode');
+  $pixPayload = $order->getData('pix_asaas_payload');
+  ?>
+
+  <div class="block">
+    <div class="block-title">
+      <strong><?= $block->escapeHtml(__('Payment Pix Information')) ?></strong>
+    </div>
+    <img class="qrcode-image" src="data:image/png;base64,<?php echo $block->escapeHtmlAttr($qrcode) ?>">
+    <div class="linha-digitavel">
+      <textarea id="qrcode-text" class="qrcode-text" rows="4"><?php echo $block->escapeHtml($pixPayload) ?></textarea><br>
+      <button class="action secondary row" id="button-copy" onclick="document.execCommand('copy', false, document.getElementById('qrcode-text').select());"><?= $block->escapeHtml(__('Copiar PIX')) ?></button>
+    </div>
+  </div>
+  <script >
+    require(['jquery', 'Magento_Ui/js/modal/modal'], function($, modal) {
+      let configs = {
+        title: 'Pix',
+        buttons: []
+      }
+
+      function copyTextSucess() {
+        document.execCommand('copy', false, document.getElementById('qrcode-text').select());
+      }
+    });
+  </script>
+
 <?php endif; ?>
